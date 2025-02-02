@@ -34,7 +34,44 @@
         text-align: center;
         position: relative;
         box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-        overflow: auto
+        overflow: auto;
+      }
+      .yes-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        z-index: 10;
+      }
+
+      .floating-yes {
+        position: absolute;
+        padding: 8px 16px;
+        background: #ff4d7c;
+        color: white;
+        border-radius: 50px;
+        font-weight: bold;
+        font-size: 0.9rem;
+        pointer-events: none;
+        animation: pop-in 0.5s forwards cubic-bezier(0.17, 0.89, 0.32, 1.49);
+        opacity: 0;
+        white-space: nowrap;
+        background: linear-gradient(45deg, #ff4d7c, #ff80ab);
+        color: white;
+        box-shadow: 0 5px 15px rgba(255, 77, 124, 0.3);
+      }
+
+      @keyframes pop-in {
+        0% {
+          transform: scale(0);
+          opacity: 0;
+        }
+        100% {
+          transform: scale(1);
+          opacity: 1;
+        }
       }
 
       .slides {
@@ -223,6 +260,7 @@
     <div class="floating-hearts"></div>
 
     <div class="card">
+      <div class="yes-overlay"></div>
       <div class="slides">
         <!-- Slide 1: Introduction -->
         <div class="slide">
@@ -305,6 +343,7 @@
       let currentSlide = 0;
       const totalSlides = 4;
       let noButtonCount = 0;
+      let yesButtonsCreated = 0;
 
       // Create progress dots
       const progressDots = document.querySelector(".progress-dots");
@@ -312,6 +351,31 @@
         const dot = document.createElement("div");
         dot.className = `dot ${i === 0 ? "active" : ""}`;
         progressDots.appendChild(dot);
+      }
+
+      function createYesButton() {
+        const overlay = document.querySelector(".yes-overlay");
+        const yes = document.createElement("div");
+        yes.className = "floating-yes";
+        yes.textContent = "Yes! 💝";
+
+        // Calculate random position within the card
+        const x = Math.random() * (overlay.offsetWidth - 80); // 80px is approximate button width
+        const y = Math.random() * (overlay.offsetHeight - 40); // 40px is approximate button height
+
+        yes.style.left = `${x}px`;
+        yes.style.top = `${y}px`;
+
+        overlay.appendChild(yes);
+        yesButtonsCreated++;
+
+        // Start removing buttons if too many are created
+        if (yesButtonsCreated > 50) {
+          const oldestButton = overlay.firstChild;
+          if (oldestButton) {
+            oldestButton.remove();
+          }
+        }
       }
 
       function nextSlide() {
@@ -334,28 +398,26 @@
       function handleNo(btn) {
         noButtonCount++;
 
-        // Get random position within viewport
+        // Create YES buttons rapidly
+        for (let i = 0; i < 5; i++) {
+          setTimeout(createYesButton, i * 100);
+        }
+
+        // Get random position for the No button
         const maxX = window.innerWidth - btn.offsetWidth;
         const maxY = window.innerHeight - btn.offsetHeight;
-
-        // Ensure button stays visible
         const x = Math.max(20, Math.min(maxX - 20, Math.random() * maxX));
         const y = Math.max(20, Math.min(maxY - 20, Math.random() * maxY));
 
-        // Make button fixed position relative to viewport
         btn.style.position = "fixed";
         btn.style.left = `${x}px`;
         btn.style.top = `${y}px`;
-
-        // Add some rotation for fun
         btn.style.transform = `rotate(${Math.random() * 30 - 15}deg)`;
 
-        // After 10 attempts, start fading
         if (noButtonCount > 10) {
           btn.style.opacity = Math.max(0.1, 1 - (noButtonCount - 10) * 0.1);
         }
       }
-
       function createHeart() {
         const heart = document.createElement("div");
         heart.className = "heart";
