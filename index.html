@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Will you be my Valentine? ❤️</title>
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap");
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Poppins", sans-serif;
+      }
+
+      body {
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: linear-gradient(135deg, #ffd6e0 0%, #ffeef2 100%);
+        padding: 16px;
+        overflow: hidden;
+        touch-action: none;
+      }
+
+      .card {
+        background: white;
+        border-radius: 24px;
+        width: 100%;
+        max-width: 350px;
+        padding: 24px 20px;
+        text-align: center;
+        position: relative;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+      }
+
+      .slides {
+        display: flex;
+        transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        position: relative;
+      }
+
+      .slide {
+        min-width: 100%;
+        padding: 10px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+      }
+
+      h1 {
+        font-size: 1.6rem;
+        color: #ff4d7c;
+        margin-bottom: 10px;
+        line-height: 1.3;
+      }
+
+      .cute-img {
+        width: 160px;
+        height: 160px;
+        border-radius: 20px;
+        margin: 10px auto;
+        display: block;
+        animation: float 3s infinite ease-in-out;
+        box-shadow: 0 8px 20px rgba(255, 77, 124, 0.2);
+      }
+
+      .message {
+        font-size: 1.1rem;
+        color: #666;
+        margin: 10px 0;
+        line-height: 1.5;
+      }
+
+      .button-container {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        width: 100%;
+        align-items: center;
+        margin-top: 10px;
+      }
+
+      .btn {
+        padding: 14px 28px;
+        border: none;
+        border-radius: 50px;
+        font-size: 1.1rem;
+        cursor: pointer;
+        transition: all 0.3s;
+        font-weight: 600;
+        width: 85%;
+        max-width: 250px;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .yes-btn {
+        background: linear-gradient(45deg, #ff4d7c, #ff80ab);
+        color: white;
+        box-shadow: 0 5px 15px rgba(255, 77, 124, 0.3);
+      }
+
+      .yes-btn:active {
+        transform: scale(0.95);
+      }
+
+      .no-btn {
+        background: #f5f5f5;
+        color: #666;
+        transition: transform 0.2s ease-out;
+      }
+
+      .floating-hearts {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        z-index: 10;
+      }
+
+      .heart {
+        position: absolute;
+        font-size: 24px;
+        pointer-events: none;
+        animation: float-up 4s ease-in-out forwards;
+        opacity: 0;
+      }
+
+      .progress-dots {
+        display: flex;
+        justify-content: center;
+        gap: 8px;
+        margin: 20px 0 10px;
+      }
+
+      .dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: #ffccd5;
+        transition: all 0.3s ease;
+      }
+
+      .dot.active {
+        background: #ff4d7c;
+        transform: scale(1.2);
+      }
+
+      @keyframes float {
+        0%,
+        100% {
+          transform: translateY(0);
+        }
+        50% {
+          transform: translateY(-10px);
+        }
+      }
+
+      @keyframes float-up {
+        0% {
+          transform: translateY(100vh) scale(0.5);
+          opacity: 1;
+        }
+        100% {
+          transform: translateY(-100vh) scale(1);
+          opacity: 0;
+        }
+      }
+
+      .reason {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        background: #fff5f7;
+        padding: 12px;
+        border-radius: 12px;
+        margin: 8px 0;
+        width: 100%;
+        text-align: left;
+      }
+
+      .reason-emoji {
+        font-size: 1.2rem;
+        min-width: 24px;
+        text-align: center;
+      }
+
+      .reason-text {
+        font-size: 1rem;
+        color: #666;
+        flex: 1;
+      }
+
+      @media (max-width: 380px) {
+        .card {
+          padding: 20px 16px;
+        }
+
+        h1 {
+          font-size: 1.4rem;
+        }
+
+        .cute-img {
+          width: 140px;
+          height: 140px;
+        }
+
+        .btn {
+          padding: 12px 24px;
+          font-size: 1rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="floating-hearts"></div>
+
+    <div class="card">
+      <div class="slides">
+        <!-- Slide 1: Introduction -->
+        <div class="slide">
+          <h1>Vani, Will you be my Valentine?</h1>
+          <img
+            src="/heart.gif"
+            alt="Cute Valentine"
+            class="cute-img"
+          />
+          <div class="button-container">
+            <button class="btn yes-btn" onclick="nextSlide()">
+              Continue ❤️
+            </button>
+          </div>
+        </div>
+
+        <!-- Slide 2: Reasons -->
+        <div class="slide">
+          <h1>Why You Should Say YES 😉💘</h1>
+          <div style="width: 100%">
+            <div class="reason">
+              <span class="reason-emoji">🔥</span>
+              <span class="reason-text"
+                >We both know we look too good together to waste this
+                potential.</span
+              >
+            </div>
+            <div class="reason">
+              <span class="reason-emoji">💃🕺</span>
+              <span class="reason-text"
+                >We hv already done the bestie phase, the FWB phase, and the
+                situationship. What’s left? The RELATIONSHIP.</span
+              >
+            </div>
+            <div class="reason">
+              <span class="reason-emoji">🚩🚩</span>
+              <span class="reason-text"
+                >Yeah, we are both red flags, but together? We’re a whole damn
+                rainbow. 🌈</span
+              >
+            </div>
+            <div class="reason">
+              <span class="reason-emoji">💍</span>
+              <span class="reason-text"
+                >Let’s be real, we’d slay as a couple.</span
+              >
+            </div>
+          </div>
+          <div class="button-container">
+            <button class="btn yes-btn" onclick="nextSlide()">Next ✨</button>
+          </div>
+        </div>
+
+        <!-- Slide 3: Final Question -->
+        <div class="slide">
+          <h1>So... what do you say? 💖</h1>
+          <div class="button-container">
+            <button class="btn yes-btn" onclick="acceptValentine()">
+              Yes! 💝
+            </button>
+            <button class="btn no-btn" onclick="handleNo(this)">No 🥺</button>
+          </div>
+        </div>
+
+        <!-- Slide 4: Success -->
+        <div class="slide">
+          <h1>Yay! 💝</h1>
+          <img
+            src="/kiss.gif"
+            alt="Celebration"
+            class="cute-img"
+          />
+        </div>
+      </div>
+
+      <div class="progress-dots"></div>
+    </div>
+
+    <script>
+      let currentSlide = 0;
+      const totalSlides = 4;
+      let noButtonCount = 0;
+
+      // Create progress dots
+      const progressDots = document.querySelector(".progress-dots");
+      for (let i = 0; i < totalSlides; i++) {
+        const dot = document.createElement("div");
+        dot.className = `dot ${i === 0 ? "active" : ""}`;
+        progressDots.appendChild(dot);
+      }
+
+      function nextSlide() {
+        if (currentSlide < totalSlides - 1) {
+          currentSlide++;
+          updateSlide();
+        }
+      }
+
+      function updateSlide() {
+        const slides = document.querySelector(".slides");
+        slides.style.transform = `translateX(-${currentSlide * 100}%)`;
+
+        // Update dots
+        document.querySelectorAll(".dot").forEach((dot, index) => {
+          dot.className = `dot ${index === currentSlide ? "active" : ""}`;
+        });
+      }
+
+      function handleNo(btn) {
+        noButtonCount++;
+
+        // Get random position within viewport
+        const maxX = window.innerWidth - btn.offsetWidth;
+        const maxY = window.innerHeight - btn.offsetHeight;
+
+        // Ensure button stays visible
+        const x = Math.max(20, Math.min(maxX - 20, Math.random() * maxX));
+        const y = Math.max(20, Math.min(maxY - 20, Math.random() * maxY));
+
+        // Make button fixed position relative to viewport
+        btn.style.position = "fixed";
+        btn.style.left = `${x}px`;
+        btn.style.top = `${y}px`;
+
+        // Add some rotation for fun
+        btn.style.transform = `rotate(${Math.random() * 30 - 15}deg)`;
+
+        // After 10 attempts, start fading
+        if (noButtonCount > 10) {
+          btn.style.opacity = Math.max(0.1, 1 - (noButtonCount - 10) * 0.1);
+        }
+      }
+
+      function createHeart() {
+        const heart = document.createElement("div");
+        heart.className = "heart";
+        heart.innerHTML = ["❤️", "💖", "💝", "💕"][
+          Math.floor(Math.random() * 4)
+        ];
+        heart.style.left = `${Math.random() * 100}vw`;
+        heart.style.zIndex = "1000";
+        document.querySelector(".floating-hearts").appendChild(heart);
+
+        setTimeout(() => heart.remove(), 4000);
+      }
+
+      function acceptValentine() {
+        currentSlide = 3;
+        updateSlide();
+
+        // Create heart shower
+        for (let i = 0; i < 30; i++) {
+          setTimeout(createHeart, i * 100);
+        }
+
+        // Continue creating hearts
+        setInterval(createHeart, 500);
+      }
+
+      // Handle touch events for no button
+      document.addEventListener("touchstart", (e) => {
+        const noBtn = document.querySelector(".no-btn");
+        if (e.target === noBtn) {
+          handleNo(noBtn);
+        }
+      });
+    </script>
+  </body>
+</html>
