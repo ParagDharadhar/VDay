@@ -434,7 +434,7 @@
       function acceptValentine() {
         currentSlide = 3;
         updateSlide();
-
+        document.querySelectorAll(".floating-yes").forEach(button => button.style.display = "none");
         // Create heart shower
         for (let i = 0; i < 30; i++) {
           setTimeout(createHeart, i * 100);
